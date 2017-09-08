@@ -27,6 +27,7 @@ setup(
     long_description=read_md('README.md'),
     version=get_version('django_portmaster'),
     url='https://github.com/miljank/django-portmaster',
+    download_url='https://github.com/miljank/django-portmaster/archive/0.0.1.tar.gz',
     author='Miljan Karadzic',
     author_email='miljank@gmail.com',
     license='BSD',

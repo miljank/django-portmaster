@@ -5,8 +5,10 @@ verify_ssl = true
 [dev-packages]
 ipython = "*"
 django-extensions = "*"
-Werkzeug = "*"
 coverage = "*"
+Werkzeug = "*"
+twine = "*"
+pypandoc = "*"
 
 [packages]
 Django = "*"
