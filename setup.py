@@ -21,13 +21,15 @@ def get_version(package):
     return re.search("__version__ = ['\"]([^'\"]+)['\"]", init_py).group(1)
 
 
+version = get_version('django_portmaster')
+
 setup(
     name='django-portmaster',
     description='A Django microservice for network port allocation',
     long_description=read_md('README.md'),
-    version=get_version('django_portmaster'),
+    version=version,
     url='https://github.com/miljank/django-portmaster',
-    download_url='https://github.com/miljank/django-portmaster/archive/0.0.1.tar.gz',
+    download_url='https://github.com/miljank/django-portmaster/archive/{0}.tar.gz'.format(version),
     author='Miljan Karadzic',
     author_email='miljank@gmail.com',
     license='BSD',
