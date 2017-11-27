@@ -239,15 +239,6 @@ class OfferApiTests(APITestCase):
         self.assertEqual(Offer.objects.count(), 1)
         self.assertEqual(response.data['port'], ['Port range has been completely utilized.'])
 
-    def test_offer_update_put(self):
-        url = reverse('service-offer-detail',
-                      kwargs={'service_name': 'Django',
-                              'secret': 'aafae2f7-4bdb-493c-beea-48bebe51f125'})
-        data = {'name': 'Web-03'}
-
-        response = self.client.put(url, data, format='json')
-        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
-
     def test_offer_update_patch(self):
         url = reverse('service-offer-detail',
                       kwargs={'service_name': 'Django',
@@ -269,11 +260,11 @@ class OfferApiTests(APITestCase):
 
     def test_offer_accept(self):
         url = reverse(
-            'service-offer-accept',
+            'service-offer-detail',
             kwargs={'service_name': 'Django',
                     'secret': 'aafae2f7-4bdb-493c-beea-48bebe51f125'}
         )
-        response = self.client.post(url, {}, format='json')
+        response = self.client.put(url, {}, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
         offers = Offer.objects.filter(secret='aafae2f7-4bdb-493c-beea-48bebe51f125')
@@ -290,11 +281,11 @@ class OfferApiTests(APITestCase):
         offer.save()
 
         url = reverse(
-            'service-offer-accept',
+            'service-offer-detail',
             kwargs={'service_name': 'Django',
                     'secret': 'aafae2f7-4bdb-493c-beea-48bebe51f125'}
         )
-        response = self.client.post(url, {}, format='json')
+        response = self.client.put(url, {}, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
         offers = Offer.objects.filter(secret='aafae2f7-4bdb-493c-beea-48bebe51f125')
@@ -302,11 +293,11 @@ class OfferApiTests(APITestCase):
 
     def test_offer_reject(self):
         url = reverse(
-            'service-offer-reject',
+            'service-offer-detail',
             kwargs={'service_name': 'Django',
                     'secret': 'aafae2f7-4bdb-493c-beea-48bebe51f125'}
         )
-        response = self.client.post(url, {}, format='json')
+        response = self.client.delete(url, {}, format='json')
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
         offers = Offer.objects.filter(secret='aafae2f7-4bdb-493c-beea-48bebe51f125')

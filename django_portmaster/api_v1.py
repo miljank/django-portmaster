@@ -3,7 +3,6 @@ from rest_framework import status
 from rest_framework import viewsets
 from rest_framework import serializers
 from rest_framework.response import Response
-from rest_framework.decorators import detail_route
 from django_portmaster.models import Service
 from django_portmaster.models import Offer
 from django_portmaster.models import Instance
@@ -44,16 +43,11 @@ class OfferViewSet(viewsets.ModelViewSet):
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-    def update(self, request, service_name, secret):
-        return Response({'detail': "Method 'PUT' not allowed."},
-                        status=status.HTTP_405_METHOD_NOT_ALLOWED)
-
     def partial_update(self, request, service_name, secret):
         return Response({'detail': "Method 'PATCH' not allowed."},
                         status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
-    @detail_route(methods=['post'])
-    def accept(self, request, service_name, secret):
+    def update(self, request, service_name, secret):
         offer = get_object_or_404(Offer, secret=secret)
 
         if offer.service.instance_set.filter(name=offer.name):
@@ -64,8 +58,7 @@ class OfferViewSet(viewsets.ModelViewSet):
         serializer = InstanceSerializer(instance)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-    @detail_route(methods=['post'])
-    def reject(self, request, service_name, secret):
+    def delete(self, request, service_name, secret):
         offer = get_object_or_404(Offer, secret=secret)
         offer.delete()
         return Response([], status=status.HTTP_204_NO_CONTENT)

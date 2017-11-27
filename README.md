@@ -79,7 +79,7 @@ Response
 * Port will not be allocated immediately. Instead it will be reserved until the client accepts the port by posting to the dedicated URL using the provided secret code:
 
 ```javascript
-POST /v1/services/django/offers/6f8ffc86-d98a-49ba-848a-a7cbaaea9360/accept
+PUT /v1/services/django/offers/6f8ffc86-d98a-49ba-848a-a7cbaaea9360
 ```
 
 Response
@@ -96,10 +96,10 @@ Response
 * Alternatively, you can reject the offer. Offers that are not accepted are automatically deleted by Portmaster middleware after they reach threshold set by `PM_DELETE_OFFERS_AFTER_MINUTES` setting (default value is 30 minutes).
 
 ```javascript
-POST /v1/services/django/offers/6f8ffc86-d98a-49ba-848a-a7cbaaea9360/reject
+DELETE /v1/services/django/offers/6f8ffc86-d98a-49ba-848a-a7cbaaea9360
 ```
 
-* You can list all port alocations for a particular service.
+* You can list all port allocations for a particular service.
 
 ```javascript
 GET /v1/services/django/ports
